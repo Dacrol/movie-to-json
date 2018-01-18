@@ -4,7 +4,12 @@
   "description": "movie-to-json",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "sync": "node --inspect index.js | browser-sync start --proxy localhost:3000 --no-online --no-inject-changes --files \"www, views, public, !**/*.json\"",
+    "eslint": "eslint www/**/*.js",
+    "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
+    "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -34,5 +39,4 @@
     "eslint-plugin-standard": "^3.0.1",
     "htmlhint": "^0.9.13"
   }
-
 }
