@@ -1,0 +1,38 @@
+{
+  "name": "movie-to-json",
+  "version": "0.0.0",
+  "description": "movie-to-json",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dacrol/movie-to-json.git"
+  },
+  "author": "Dacrol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dacrol/movie-to-json/issues"
+  },
+  "homepage": "https://github.com/Dacrol/movie-to-json#readme",
+  "dependencies": {
+    "compression": "^1.7.1",
+    "express": "^4.16.2",
+    "jsonflex": "^1.0.10"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.2.18",
+    "babel-eslint": "^8.2.1",
+    "browser-sync": "^2.23.5",
+    "concurrently": "^3.5.1",
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "htmlhint": "^0.9.13"
+  }
+
+}
