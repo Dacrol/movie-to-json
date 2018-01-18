@@ -11,7 +11,7 @@
     "no-multiple-empty-lines": "off",
     "no-undef": "off",
     "padded-blocks": "off",
-    "semi": ["warn", "always"]
+    "semi": ["warn", "never"]
   }
 
 }
