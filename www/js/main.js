@@ -11,11 +11,18 @@ class MovieFetcher {
     return res.results[0]
   }
 
-  async getTmdbDetails (id, tmdbToken = this.token) {
-    let res = await $.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbToken}&append_to_response=videos,credits,images`
-    ) // &language=sv-SE
-    return res
+  async getTmdbDetails (id, swedish = false, tmdbToken = this.token) {
+    if (!swedish) {
+      let res = await $.get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbToken}&append_to_response=videos,credits,images`
+      ) // &language=sv-SE
+      return res
+    } else {
+      let res = await $.get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbToken}&append_to_response=videos,credits,images&language=sv-SE`
+      )
+      return res
+    }
   }
 
   static async getPlotFromMoviezine (title) {
@@ -31,8 +38,12 @@ class MovieFetcher {
         )
       })
     let regex = /<div class='plot'>([\s\S]*?)<\/div>/i
-    let plot = regex.exec(searchItem.contents)[1]
-    return plot
+    try {
+      let plot = regex.exec(searchItem.contents)[1]
+      return plot
+    } catch (error) {
+      return null
+    }
   }
 }
 
@@ -48,16 +59,46 @@ $('#submit').click(async function (event) {
   if (token.length === 32) {
     let fetcher = new MovieFetcher($('#inputToken').val())
     let res = await fetcher.searchTmdb($('#inputSearch').val())
-    console.log(res)
+    // console.log(res)
     let deetz = await fetcher.getTmdbDetails(res.id)
 
-    let swedishPlot = await MovieFetcher.getPlotFromMoviezine(
+    $('#swedishPlotWarning').text('')
+    let swedishPlot
+    let swedishTitle
+    /* = await MovieFetcher.getPlotFromMoviezine(
       $('#swedishTitleCheckbox').is(':checked')
         ? $('#swedishTitle').val()
         : deetz.original_title
-    )
-    // console.log(swedishPlot)
-    Object.assign(deetz, { plot_sv: swedishPlot.trim() })
+    ) */
+    // await MovieFetcher.getPlotFromMoviezine(
+    //   swedishDeetz.title
+    // )
+    // Get the Swedish title
+    let swedishDeetz = await fetcher.getTmdbDetails(res.id, true)
+    swedishPlot = swedishDeetz.overview
+    swedishTitle = swedishDeetz.title
+    if (swedishPlot === null) {
+      swedishPlot = await MovieFetcher.getPlotFromMoviezine(
+        $('#swedishTitleCheckbox').is(':checked')
+          ? $('#swedishTitle').val()
+          : swedishTitle || deetz.original_title
+      )
+    }
+    if (
+      typeof swedishTitle !== 'undefined' &&
+      swedishTitle.length > 0 &&
+      !$('#swedishTitleCheckbox').is(':checked')
+    ) {
+      Object.assign(deetz, { title_sv: swedishTitle.trim() })
+    } else if ($('#swedishTitleCheckbox').is(':checked')) {
+      Object.assign(deetz, { title_sv: $('#swedishTitle').val() })
+    }
+    if (swedishPlot !== null) {
+      Object.assign(deetz, { plot_sv: swedishPlot.trim() })
+    } else {
+      $('#swedishPlotWarning').text('Note: could not find Swedish plot')
+    }
+
     // console.log(deetz)
     renderImages([deetz.poster_path, deetz.backdrop_path])
     // @ts-ignore
@@ -112,6 +153,8 @@ function renderImages (paths) {
 function titleToSlug (title) {
   return title
     .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // öäå -> oaa
     .trim()
     .replace(/&/g, '-and-')
     .replace(/[\s\W-]+/g, '-')
