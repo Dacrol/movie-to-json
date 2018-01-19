@@ -100,7 +100,20 @@ $('#submit').click(async function (event) {
     }
 
     // console.log(deetz)
-    renderImages([deetz.poster_path, deetz.backdrop_path])
+    // let imagepaths = [deetz.poster_path, deetz.backdrop_path]
+    let imagepaths = []
+    for (let index = 0; index < 4; index++) {
+      try {
+        imagepaths.push(deetz.images.posters[index].file_path)
+      } catch (error) {}
+    }
+    for (let index = 0; index < 4; index++) {
+      try {
+        imagepaths.push(deetz.images.backdrops[index].file_path)
+      } catch (error) {}
+    }
+
+    renderImages(imagepaths)
     // @ts-ignore
     $('#json-renderer').jsonViewer(deetz, {
       collapsed: true,

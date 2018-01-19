@@ -16,7 +16,8 @@ textarea {
 }
 
 #images img{
-  width: 300px;
+  width: 250px;
+  margin-bottom: 5px;
 }
 
 .text-warn {
@@ -24,4 +25,5 @@ textarea {
   margin-left: 1.25rem;
   margin-top: .5rem;
   margin-bottom: .75rem;
+  opacity: 0.75;
 }
