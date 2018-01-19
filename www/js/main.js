@@ -1,3 +1,4 @@
+let appended = []
 class MovieFetcher {
   constructor (t) {
     this.token = t
@@ -33,50 +34,9 @@ class MovieFetcher {
     let plot = regex.exec(searchItem.contents)[1]
     return plot
   }
-
-  static generateJSON (details) {
-    return [
-      {
-        title: '',
-        productionCountries: ['Italien', 'USA'],
-        productionYear: 2017,
-        length: 132,
-        genre: 'Drama',
-        distributor: 'UIP',
-        language: 'engelska',
-        subtitles: 'svenska',
-        director: 'Luca Guadagnino',
-        actors: ['Armie Hammer', 'Timothée Chalamet', 'Michael Stuhlbarg'],
-        description:
-          '<p>Filmen utspelas i norra Italien sommaren 1983. En ung amerikansk-italienare blir förälskad i en amerikansk student som kommer för att studera och bo hos hans familj.</p><p>Tillsammans upplever de en oförglömlig sommar - full av musik, mat och kärlek - som för evigt kommer att förändra dem.</p>',
-        images: ['call-me-poster1.jpg', 'call-me-poster2.jpg'],
-        youtubeTrailers: ['Z9AYPxH5NTM'],
-        reviews: [
-          {
-            source: 'Sydsvenskan',
-            quote: 'ett drama berättat med stor ömhet',
-            stars: 4,
-            max: 5
-          },
-          {
-            source: 'Svenska Dagbladet',
-            quote: 'en film att förälska sig i',
-            stars: 5,
-            max: 5
-          },
-          {
-            source: 'DN',
-            quote: 'en het romans i åttiotalskostym',
-            stars: 4,
-            max: 5
-          }
-        ]
-      }
-    ]
-  }
 }
 
-$('button').click(async function (event) {
+$('#submit').click(async function (event) {
   event.preventDefault()
 
   let token = $('#inputToken').val()
@@ -87,11 +47,31 @@ $('button').click(async function (event) {
     console.log(res)
     let deetz = await fetcher.getTmdbDetails(res.id)
     console.log(deetz)
+    // @ts-ignore
     $('#json-renderer').jsonViewer(deetz, {
       collapsed: true,
       withQuotes: false
     })
     $('#json-raw').text(JSON.stringify(deetz, null, '  '))
+    $('#append').prop('disabled', false)
+    $('#append').click(function (event) {
+      event.preventDefault()
+      $('#jsonflex-save-submit').prop('disabled', false)
+      appended.push(deetz)
+      // @ts-ignore
+      $('#json-renderer-save').jsonViewer(appended, {
+        collapsed: true,
+        withQuotes: false
+      })
+      $('#json-raw-save').text(JSON.stringify(appended, null, '  '))
+      $('#jsonflex-save-submit').click(function () {
+        if ($('#jsonflex-save').val().toString().length > 0) {
+          // @ts-ignore
+          JSON._save($('#jsonflex-save').val(), appended)
+          $('#confirm').append('Saved in /json/' + $('#jsonflex-save').val() + '.json')
+        }
+      })
+    })
   }
 })
 
