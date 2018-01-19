@@ -24,7 +24,16 @@
       <div class="form-group">
         <label for="inputSearch">Movie</label>
         <input type="text" class="form-control" id="inputSearch">
+
+        </div>
+         <div class="form-group">
+        <input class="form-control" id="swedishTitle" type="text" placeholder="" disabled>
+  <input class="form-check-input" type="checkbox" value="" id="swedishTitleCheckbox">
+  <label class="form-check-label" for="swedishTitleCheckbox">
+    Different Swedish title
+  </label>
       </div>
+
       <button type="submit" id="submit" class="btn btn-primary">Search</button>
     </form>
     <div id="result" class="container-fluid mt-5">
@@ -33,6 +42,8 @@
     <hr>
     <div class="container-fluid">
       <textarea rows="15" id="json-raw"></textarea>
+    </div>
+    <div class="container-fluid" id="images">
     </div>
     <div class="container-fluid">
     <button type="button" id="append" class="mt-3 btn btn-secondary btn-sm" disabled>Append &gt;</button>

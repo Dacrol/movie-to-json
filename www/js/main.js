@@ -13,7 +13,7 @@ class MovieFetcher {
 
   async getTmdbDetails (id, tmdbToken = this.token) {
     let res = await $.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbToken}&append_to_response=videos,credits`
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbToken}&append_to_response=videos,credits,images`
     ) // &language=sv-SE
     return res
   }
@@ -36,6 +36,10 @@ class MovieFetcher {
   }
 }
 
+$('#swedishTitleCheckbox').change(function () {
+  $('#swedishTitle').prop('disabled', !$(this).is(':checked'))
+})
+
 $('#submit').click(async function (event) {
   event.preventDefault()
 
@@ -46,7 +50,16 @@ $('#submit').click(async function (event) {
     let res = await fetcher.searchTmdb($('#inputSearch').val())
     console.log(res)
     let deetz = await fetcher.getTmdbDetails(res.id)
+
+    let swedishPlot = await MovieFetcher.getPlotFromMoviezine(
+      $('#swedishTitleCheckbox').is(':checked')
+        ? $('#swedishTitle').val()
+        : $('#inputSearch').val()
+    )
+    // console.log(swedishPlot)
+    Object.assign(deetz, { plot_sv: swedishPlot.trim() })
     console.log(deetz)
+    renderImages([deetz.poster_path, deetz.backdrop_path])
     // @ts-ignore
     $('#json-renderer').jsonViewer(deetz, {
       collapsed: true,
@@ -55,9 +68,12 @@ $('#submit').click(async function (event) {
     $('#json-raw').text(JSON.stringify(deetz, null, '  '))
     $('#append').prop('disabled', false)
     $('#append').click(function (event) {
+      $('#append').prop('disabled', true)
       event.preventDefault()
+      console.log(appended)
       $('#jsonflex-save-submit').prop('disabled', false)
       appended.push(deetz)
+      $('#json-renderer-save').html('')
       // @ts-ignore
       $('#json-renderer-save').jsonViewer(appended, {
         collapsed: true,
@@ -65,15 +81,30 @@ $('#submit').click(async function (event) {
       })
       $('#json-raw-save').text(JSON.stringify(appended, null, '  '))
       $('#jsonflex-save-submit').click(function () {
-        if ($('#jsonflex-save').val().toString().length > 0) {
+        if (
+          $('#jsonflex-save')
+            .val()
+            .toString().length > 0
+        ) {
           // @ts-ignore
           JSON._save($('#jsonflex-save').val(), appended)
-          $('#confirm').append('Saved in /json/' + $('#jsonflex-save').val() + '.json')
+          $('#confirm').append(
+            'Saved in /json/' + $('#jsonflex-save').val() + '.json'
+          )
         }
       })
     })
   }
 })
+
+function renderImages (paths) {
+  let imghtml = ''
+  paths.forEach(path => {
+    imghtml = imghtml.concat(`<img src="https://image.tmdb.org/t/p/original${path}">\n`)
+  })
+  console.log(imghtml)
+  $('#images').html(imghtml)
+}
 
 function titleToSlug (title) {
   return title
