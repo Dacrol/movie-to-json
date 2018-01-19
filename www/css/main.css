@@ -18,3 +18,10 @@ textarea {
 #images img{
   width: 300px;
 }
+
+.text-warn {
+  color: darkgreen;
+  margin-left: 1.25rem;
+  margin-top: .5rem;
+  margin-bottom: .75rem;
+}
