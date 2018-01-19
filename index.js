@@ -1,5 +1,7 @@
 const express = require('express')
-const flexjson = require('jsonflex')()
+const flexjson = require('jsonflex')({
+  jsonDir: '/json'
+})
 const compression = require('compression')
 
 // Create express server
