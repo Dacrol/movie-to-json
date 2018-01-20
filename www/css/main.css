@@ -1,6 +1,6 @@
 pre {
-    border: 1px solid #aaa;
-    min-height: 25px;
+  border: 1px solid #aaa;
+  min-height: 25px;
 }
 
 textarea {
@@ -16,7 +16,7 @@ textarea {
   margin-left: 1.25rem;
 }
 
-#images img{
+#images img {
   width: 250px;
   margin-bottom: 5px;
 }
@@ -24,16 +24,21 @@ textarea {
 .text-warn {
   color: darkgreen;
   margin-left: 1.25rem;
-  margin-top: .5rem;
-  margin-bottom: .75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
   opacity: 0.75;
 }
 
-a[disabled=disabled] {
-  background-color: #868e96!important;
-  border-color: #868e96!important;
-  opacity: .65;
+a[disabled='disabled'] {
+  background-color: #868e96 !important;
+  border-color: #868e96 !important;
+  opacity: 0.65;
 }
 a#save-submit {
-  color: #fff!important
+  color: #fff !important;
+}
+
+.text-warn {
+  margin-left: 0;
+  color: darkred !important;
 }

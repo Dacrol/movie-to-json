@@ -60,6 +60,12 @@ $('#submit').click(async function (event) {
     let fetcher = new MovieFetcher($('#inputToken').val())
     let res = await fetcher.searchTmdb($('#inputSearch').val())
     // console.log(res)
+    if (typeof res === 'undefined') {
+      $('.no-hits').text('No hits!')
+      return
+    } else {
+      $('.no-hits').text('')
+    }
     let deetz = await fetcher.getTmdbDetails(res.id)
 
     $('#swedishPlotWarning').text('')
