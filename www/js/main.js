@@ -186,6 +186,9 @@ $('#filename').on('keyup', function () {
     })
   } else {
     $('#jsonflex-save-submit').prop('disabled', true)
+    $('#save-submit').prop({
+      download: 'movie-data.json'
+    })
   }
 })
 
