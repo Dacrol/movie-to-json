@@ -1,0 +1,30 @@
+pre {
+    border: 1px solid #aaa;
+    min-height: 25px;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+}
+
+.form-check-input {
+  margin-left: 0;
+}
+
+.form-check-label {
+  margin-left: 1.25rem;
+}
+
+#images img{
+  width: 250px;
+  margin-bottom: 5px;
+}
+
+.text-warn {
+  color: darkgreen;
+  margin-left: 1.25rem;
+  margin-top: .5rem;
+  margin-bottom: .75rem;
+  opacity: 0.75;
+}
