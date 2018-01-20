@@ -170,10 +170,11 @@ $('#filename').on('keyup', function () {
   if (
     $('#filename')
       .val()
-      .toString().length > 0 &&
-    appended.length > 0
+      .toString().length > 0
   ) {
-    $('#jsonflex-save-submit').prop('disabled', false)
+    if (appended.length > 0) {
+      $('#jsonflex-save-submit').prop('disabled', false)
+    }
     let filename = $('#filename')
       .val()
       .toString()
