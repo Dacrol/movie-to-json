@@ -9,7 +9,8 @@
     "eslint": "eslint www/**/*.js",
     "htmlhint": "htmlhint --config .htmlhintrc www/**/*.{htm,html}",
     "lint": "concurrently -s all \"npm run eslint\" \"npm run htmlhint\"",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "deploy": "gh-pages -d www"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
+    "gh-pages": "^1.1.0",
     "htmlhint": "^0.9.13"
   }
 }
