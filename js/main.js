@@ -160,6 +160,10 @@ $('#filename').on('keyup', function () {
     $('#save-submit').prop({
       download: filename
     })
+  } else {
+    $('#save-submit').prop({
+      download: "movie-data.json"
+    })
   }
 })
 
