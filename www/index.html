@@ -36,12 +36,16 @@
       <button type="submit" id="submit" class="btn btn-primary">Search</button>
     </form>
     <div id="result" class="container-fluid mt-5">
-      <div><small class="text-muted">Output: </small></div>
+      <div>
+        <small class="text-muted">Output: </small>
+      </div>
       <pre id="json-renderer"></pre>
     </div>
     <hr>
     <div class="container-fluid">
-      <div><small class="text-muted">Raw output: </small></div>
+      <div>
+        <small class="text-muted">Raw output: </small>
+      </div>
       <textarea rows="15" id="json-raw"></textarea>
     </div>
     <small id="swedishPlotWarning" class="form-text text-muted text-warn"></small>
@@ -59,10 +63,11 @@
     </div>
     <div class="container-fluid mt-4 mb-5">
       <div class="form-group">
-        <label for="jsonflex-save">Filename</label>
-        <input type="text" class="form-control" id="jsonflex-save" aria-describedby="tokenHelp">
+        <label for="filename">Filename</label>
+        <input type="text" class="form-control" id="filename">
       </div>
-      <button type="button" id="jsonflex-save-submit" class=" btn btn-secondary btn-sm" disabled>Save with jsonflex</button>
+      <a role="button" id="save-submit" download="movie-data.json" class="btn btn-secondary btn-sm" disabled="disabled">Download JSON</a>
+      <button type="button" id="jsonflex-save-submit" class="btn btn-secondary btn-sm" disabled>Save with jsonflex</button>
       <div id="confirm" class="mt-3">
       </div>
     </div>

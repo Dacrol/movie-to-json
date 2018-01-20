@@ -28,3 +28,12 @@ textarea {
   margin-bottom: .75rem;
   opacity: 0.75;
 }
+
+a[disabled=disabled] {
+  background-color: #868e96!important;
+  border-color: #868e96!important;
+  opacity: .65;
+}
+a#save-submit {
+  color: #fff!important
+}

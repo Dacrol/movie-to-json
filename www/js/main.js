@@ -126,7 +126,6 @@ $('#submit').click(async function (event) {
       $('#append').prop('disabled', true)
       event.preventDefault()
       // console.log(appended)
-      $('#jsonflex-save-submit').prop('disabled', false)
       appended.push(deetz)
       $('#json-renderer-save').html('')
       // @ts-ignore
@@ -135,20 +134,57 @@ $('#submit').click(async function (event) {
         withQuotes: false
       })
       $('#json-raw-save').text(JSON.stringify(appended, null, '  '))
+
+      $('#save-submit').prop({
+        href:
+          'data:application/json,' +
+          encodeURIComponent(JSON.stringify(appended, null, 2))
+      })
+      $('#save-submit').attr('disabled', null)
+      if (
+        $('#filename')
+          .val()
+          .toString().length > 0
+      ) {
+        $('#jsonflex-save-submit').prop('disabled', false)
+      }
+      $('#jsonflex-save-submit').unbind('click')
       $('#jsonflex-save-submit').click(function () {
         if (
-          $('#jsonflex-save')
+          $('#filename')
             .val()
             .toString().length > 0
         ) {
           // @ts-ignore
-          JSON._save($('#jsonflex-save').val(), appended)
+          JSON._save($('#filename').val(), appended)
           $('#confirm').append(
-            'Saved in /json/' + $('#jsonflex-save').val() + '.json'
+            'Saved in /json/' + $('#filename').val() + '.json'
           )
         }
       })
     })
+  }
+})
+
+$('#filename').on('keyup', function () {
+  if (
+    $('#filename')
+      .val()
+      .toString().length > 0 &&
+    appended.length > 0
+  ) {
+    $('#jsonflex-save-submit').prop('disabled', false)
+    let filename = $('#filename')
+      .val()
+      .toString()
+    if (!filename.endsWith('.json')) {
+      filename = filename + '.json'
+    }
+    $('#save-submit').prop({
+      download: filename
+    })
+  } else {
+    $('#jsonflex-save-submit').prop('disabled', true)
   }
 })
 
