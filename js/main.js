@@ -126,7 +126,6 @@ $('#submit').click(async function (event) {
       $('#append').prop('disabled', true)
       event.preventDefault()
       // console.log(appended)
-      $('#jsonflex-save-submit').prop('disabled', false)
       appended.push(deetz)
       $('#json-renderer-save').html('')
       // @ts-ignore
@@ -141,11 +140,12 @@ $('#submit').click(async function (event) {
           'data:application/json,' +
           encodeURIComponent(JSON.stringify(appended, null, 2))
       })
+      $('#save-submit').attr('disabled', null)
     })
   }
 })
 
-$('#filename').change(function () {
+$('#filename').on('keyup', function () {
   if (
     $('#filename')
       .val()
