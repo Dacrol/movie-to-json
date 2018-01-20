@@ -162,7 +162,7 @@ $('#filename').on('keyup', function () {
     })
   } else {
     $('#save-submit').prop({
-      download: "movie-data.json"
+      download: 'movie-data.json'
     })
   }
 })
