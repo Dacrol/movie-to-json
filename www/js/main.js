@@ -209,6 +209,12 @@ function renderImages (paths) {
   $('#images').html(imghtml)
 }
 
+/**
+ * Slugifies a title
+ *
+ * @param {string} title
+ * @returns {string}
+ */
 function titleToSlug (title) {
   return title
     .toLowerCase()
